@@ -1,0 +1,215 @@
+unit RegisterProperty;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, dmProperty;
+
+type
+  TRegProperty = class(TForm)
+    address: TEdit;
+    Description: TEdit;
+    PropertySize: TEdit;
+    Price: TEdit;
+    PropertyType: TComboBox;
+    BuildMaterials: TComboBox;
+    YardSize: TEdit;
+    ParkingSpace: TEdit;
+    PropertySubType: TComboBox;
+    Regulation: TComboBox;
+    RegisterProperty: TButton;
+    AddressTXT: TStaticText;
+    DescriptionTXT: TStaticText;
+    StaticText1: TStaticText;
+    PriceTXT: TStaticText;
+    YardSizeTXT: TStaticText;
+    PropertyTypeTXT: TStaticText;
+    BuildMaterialsTXT: TStaticText;
+    SubTypeTXT: TStaticText;
+    RequlationTXT: TStaticText;
+    ParkingSpaceTXT: TStaticText;
+    procedure FormCreate(Sender: TObject);
+    procedure SelectedItem(Sender: TObject);
+    procedure RegisterPropertyClick(Sender: TObject);
+    procedure RegisterSubTypeProperty();
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  RegProperty: TRegProperty;
+  SellerId : integer;
+  EmployeeId : integer;
+  Regulated : string;
+implementation
+
+{$R *.dfm}
+procedure PopulateBuildMaterials();
+begin
+ RegProperty.BuildMaterials.AddItem('EPK', nil);
+ RegProperty.BuildMaterials.AddItem('Birck', nil);
+ RegProperty.BuildMaterials.AddItem('Panel', nil);
+ RegProperty.BuildMaterials.AddItem('Mudbrick', nil);
+ RegProperty.BuildMaterials.ItemIndex :=0;
+end;
+
+procedure TRegProperty.FormCreate(Sender: TObject);
+begin
+PropertyType.AddItem('House', nil);
+PropertyType.AddItem('Apartment', nil);
+PropertyType.AddItem('Land', nil);
+  //Setting the default value
+  PropertyType.ItemIndex := 0;
+    //
+    PopulateBuildMaterials();
+    PropertySubType.AddItem('Floor Of House',nil);
+    PropertySubType.AddItem('House',nil);
+    PropertySubType.ItemIndex :=0;
+  //Setting the default value
+        BuildMaterials.ItemIndex :=0;
+        Regulation.Hide;
+        Regulation.AddItem('Yes', nil);
+        Regulation.AddItem('No', nil);
+        Regulation.ItemIndex :=0;
+end;
+
+procedure TRegProperty.RegisterSubTypeProperty();
+begin
+  if(PropertyType.Text='House')then
+  begin
+   begin
+      try
+       dmProperty.Form6.qrProperty.Close;
+      dmProperty.Form6.qrProperty.SQL.Clear;
+      dmProperty.Form6.qrProperty.SQL.Add('INSERT INTO HOUSE (PROPERTY_ID, BUILD_MATERIAL, HOUSE_TYPE, PARKING_SPACE, YARD_SIZE)');
+      dmProperty.Form6.qrProperty.SQL.Add('VALUES( (SELECT ID FROM PROPERTY WHERE ADDRESS= '''+Address.Text+'''),'+' '''+BuildMaterials.Text+''',');
+      dmProperty.Form6.qrProperty.SQL.Add(' '''+PropertySubType.Text+''','+' '+ ParkingSpace.Text+',');
+      dmProperty.Form6.qrProperty.SQL.Add(' '+YardSize.Text+')');
+      dmProperty.Form6.qrProperty.ExecSQL;
+       RegProperty.Close;
+        Except
+       ShowMessage('This Adress is alredy in use!');
+      end;
+
+  end;
+  if(PropertyType.Text='Apartment')then
+  begin
+   begin
+      try
+       dmProperty.Form6.qrProperty.Close;
+      dmProperty.Form6.qrProperty.SQL.Clear;
+      dmProperty.Form6.qrProperty.SQL.Add('INSERT INTO APARTMENT (PROPERTY_ID, BUILD_MATERIAL, TYPE_OF_APARTMENT )');
+      dmProperty.Form6.qrProperty.SQL.Add('VALUES( (SELECT ID FROM PROPERTY WHERE ADDRESS= '''+Address.Text+'''),'+' '''+BuildMaterials.Text+''',');
+      dmProperty.Form6.qrProperty.SQL.Add(' '''+PropertySubType.Text+''')');
+      dmProperty.Form6.qrProperty.ExecSQL;
+       RegProperty.Close;
+          Except
+       ShowMessage('This Adress is alredy in use!');
+      end;
+   end;
+
+
+      end;
+
+  end;
+   if(PropertyType.Text='Land')then
+  begin
+  if(  Regulation.Text='Yes')then
+  begin
+    Regulated := 'TRUE';
+  end
+  else begin
+    Regulated := 'FALSE';
+  end;
+      begin
+      try
+      dmProperty.Form6.qrProperty.Close;
+      dmProperty.Form6.qrProperty.SQL.Clear;
+      dmProperty.Form6.qrProperty.SQL.Add('INSERT INTO LAND (PROPERTY_ID, REGULATED, LAND_TYPE )');
+      dmProperty.Form6.qrProperty.SQL.Add('VALUES( (SELECT ID FROM PROPERTY WHERE ADDRESS= '''+Address.Text+'''),'+' '''+Regulated+''',');
+      dmProperty.Form6.qrProperty.SQL.Add(' '''+PropertySubType.Text+''')');
+      dmProperty.Form6.qrProperty.ExecSQL;
+       RegProperty.Close;
+      Except
+       ShowMessage('This Adress is alredy in use!');
+      end;
+
+
+
+  end;
+  end;
+
+end;
+
+
+procedure TRegProperty.RegisterPropertyClick(Sender: TObject);
+begin
+  {Checks if empty string is pushed to the database}
+
+  if (address.Text<>'') and (Description.Text <>'') and (propertySize.Text<>'') and (Price.Text<>'') then
+
+   begin
+    {From the dmAgency I`m Using qrAgency (Object that is used to query the database.)}
+ with dmProperty.Form6.qrProperty do
+    begin
+    dmProperty.Form6.qrProperty.Close;
+      dmProperty.Form6.qrProperty.SQL.Clear;
+      dmProperty.Form6.qrProperty.SQL.Add('INSERT INTO PROPERTY (PROPERTY_SIZE, DESCRIPTION, ADDRESS, PRICE,');
+      dmProperty.Form6.qrProperty.SQL.Add(' PROPERTY_TYPE, SOLD, SELLER_ID, EMPLOYEE_ID )');
+      dmProperty.Form6.qrProperty.SQL.Add('VALUES( '+PropertySize.Text+','+' '''+ Description.Text+''',');
+      dmProperty.Form6.qrProperty.SQL.Add(' '''+Address.Text+''','+' '''+ Price.Text+''',');
+      dmProperty.Form6.qrProperty.SQL.Add(' '''+PropertyType.Text+''','+' FALSE,');
+      dmProperty.Form6.qrProperty.SQL.Add(' '+SellerId.ToString+','+' '+ EmployeeId.ToString+' )');
+      dmProperty.Form6.qrProperty.ExecSQL;
+      RegisterSubTypeProperty();
+    end;
+    end
+    else begin
+        ShowMessage('No Empty Values!');
+    end;
+end;
+
+procedure TRegProperty.SelectedItem(Sender: TObject);
+begin
+   case PropertyType.ItemIndex of
+    0 :begin
+    BuildMaterials.Show;
+    YardSize.Show;
+    ParkingSpace.Show;
+    PropertySubType.Clear;
+    PropertySubType.AddItem('Floor Of House',nil);
+    PropertySubType.AddItem('House',nil);
+    PropertySubType.ItemIndex :=0;
+    BuildMaterials.ItemIndex:=0;
+    Regulation.Hide;
+    end;
+    1 : begin
+    BuildMaterials.Show;
+    PropertySubType.Clear;
+    PropertySubType.AddItem('Studio',nil);
+    PropertySubType.AddItem('Garsoniera',nil);
+    PropertySubType.AddItem('Two Room Apartment',nil);
+    PropertySubType.AddItem('Tree Room Apartment',nil);
+    PropertySubType.AddItem('Mainsonette',nil);
+    PropertySubType.ItemIndex :=0;
+    BuildMaterials.ItemIndex:=0;
+    Regulation.Hide;
+    end;
+    2 : begin
+    BuildMaterials.Hide;
+    YardSize.Hide;
+    ParkingSpace.Hide;
+    PropertySubType.Clear;
+    PropertySubType.AddItem('Feild',nil);
+    PropertySubType.AddItem('Lawn',nil);
+    PropertySubType.AddItem('Forest',nil);
+    PropertySubType.ItemIndex :=0;
+    Regulation.Show;
+    end;
+    end;
+end;
+end.

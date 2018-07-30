@@ -1,0 +1,102 @@
+object Properties: TProperties
+  Left = 0
+  Top = 0
+  Caption = 'Properties'
+  ClientHeight = 231
+  ClientWidth = 505
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object DBGrid1: TDBGrid
+    Left = 0
+    Top = 0
+    Width = 505
+    Height = 120
+    Align = alTop
+    DataSource = PropertyData
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    ReadOnly = True
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+  end
+  object Exit: TButton
+    Left = 8
+    Top = 126
+    Width = 75
+    Height = 25
+    Caption = 'Exit'
+    TabOrder = 1
+  end
+  object Houses: TButton
+    Left = 120
+    Top = 126
+    Width = 75
+    Height = 25
+    Caption = 'Houses'
+    TabOrder = 2
+    OnClick = HousesClick
+  end
+  object Apartments: TButton
+    Left = 224
+    Top = 126
+    Width = 75
+    Height = 25
+    Caption = 'Apartments'
+    TabOrder = 3
+  end
+  object Lands: TButton
+    Left = 328
+    Top = 126
+    Width = 75
+    Height = 25
+    Caption = 'Lands'
+    TabOrder = 4
+  end
+  object AgencyconnectionConnection: TFDConnection
+    Params.Strings = (
+      'ConnectionDef=AgencyConnection')
+    Connected = True
+    LoginPrompt = False
+    Left = 425
+    Top = 124
+  end
+  object PropertyTable: TFDQuery
+    Active = True
+    Connection = AgencyconnectionConnection
+    SQL.Strings = (
+      'SELECT * FROM PROPERTY ORDER BY PRICE DESC')
+    Left = 449
+    Top = 180
+  end
+  object PropertyData: TDataSource
+    DataSet = PropertyTable
+    Left = 376
+    Top = 179
+  end
+  object qrAllHouses: TFDQuery
+    Connection = AgencyconnectionConnection
+    SQL.Strings = (
+      
+        'SELECT ID, PROPERTY_SIZE, DESCRIPTION, ADDRESS, PRICE, PROPERTY_' +
+        'TYPE, SOLD, EMPLOYEE_ID, SELLER_ID, BUILD_MATERIAL, HOUSE_TYPE, ' +
+        'PARKING_SPACE, YARD_SIZE FROM PROPERTY INNER JOIN HOUSE ON PROPE' +
+        'RTY.ID=HOUSE.PROPERTY_ID ORDER BY PRICE DESC')
+    Left = 241
+    Top = 172
+  end
+  object HousesData: TDataSource
+    DataSet = qrAllHouses
+    Left = 168
+    Top = 171
+  end
+end

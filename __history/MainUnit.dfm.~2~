@@ -1,0 +1,66 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Main'
+  ClientHeight = 231
+  ClientWidth = 505
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object RegisterAgency: TButton
+    Left = 8
+    Top = 24
+    Width = 97
+    Height = 25
+    Caption = 'RegisterAgency'
+    TabOrder = 0
+    OnClick = RegisterAgencyClick
+  end
+  object RegisterEmployee: TButton
+    Left = 8
+    Top = 55
+    Width = 97
+    Height = 25
+    Caption = 'RegisterEmployee'
+    TabOrder = 1
+  end
+  object RegisterCustomer: TButton
+    Left = 8
+    Top = 86
+    Width = 97
+    Height = 25
+    Caption = 'RegisterCustomer'
+    TabOrder = 2
+  end
+  object ViewAgencies: TButton
+    Left = 152
+    Top = 24
+    Width = 81
+    Height = 25
+    Caption = 'ViewAgencies'
+    TabOrder = 3
+    OnClick = ViewAgenciesClick
+  end
+  object ViewEmployees: TButton
+    Left = 152
+    Top = 55
+    Width = 81
+    Height = 25
+    Caption = 'ViewEmployees'
+    TabOrder = 4
+  end
+  object ViewCustomers: TButton
+    Left = 152
+    Top = 86
+    Width = 81
+    Height = 25
+    Caption = 'ViewCustomers'
+    TabOrder = 5
+  end
+end

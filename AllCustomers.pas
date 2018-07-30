@@ -1,0 +1,81 @@
+unit AllCustomers;
+{This is the form that shows all the customers.}
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, Vcl.Grids, Vcl.DBGrids,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls, RegisterBuyer, RegSeller;
+
+type
+  TFormCustomers = class(TForm)
+    AgencyconnectionConnection: TFDConnection;
+    CustomerTable: TFDQuery;
+    CustomerData: TDataSource;
+    DBGrid1: TDBGrid;
+    Exit: TButton;
+    RegisterBuyer: TButton;
+    RegisterSeller: TButton;
+    Refresh: TButton;
+    procedure ExitClick(Sender: TObject);
+    procedure getID(Column: TColumn);
+    procedure RegisterBuyerClick(Sender: TObject);
+    procedure RegisterSellerClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure RefreshClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormCustomers: TFormCustomers;
+  customerId :integer;
+  customerName : string;
+
+implementation
+
+{$R *.dfm}
+{Passes customer id and name to the register buyer form.}
+procedure TFormCustomers.RegisterBuyerClick(Sender: TObject);
+begin
+  Buyer.customerID := customerId;
+  Buyer.CustomerName.Caption := customerName;
+  Buyer.ShowModal;
+
+end;
+ {Closes the form.}
+procedure TFormCustomers.ExitClick(Sender: TObject);
+begin
+  FormCustomers.Close;
+end;
+
+{Refreshes Dataset}
+procedure TFormCustomers.FormCreate(Sender: TObject);
+begin
+  CustomerData.DataSet.Refresh;
+end;
+ {This is used when clicked on column from DBGRID gets the customer id and name.}
+procedure TFormCustomers.getID(Column: TColumn);
+begin
+  customerId := DBGrid1.Fields[0].AsInteger;
+  customerName :=DBGrid1.Fields[1].AsString;
+end;
+ {Refresh button.}
+procedure TFormCustomers.RefreshClick(Sender: TObject);
+begin
+  CustomerData.DataSet.Refresh;
+end;
+ {This starts register seller form.}
+procedure TFormCustomers.RegisterSellerClick(Sender: TObject);
+begin
+  RegSeller.RegisterSeller.CustomerName.Caption := customerName;
+  RegSeller.customerID:=customerId;
+  RegSeller.RegisterSeller.ShowModal
+end;
+end.

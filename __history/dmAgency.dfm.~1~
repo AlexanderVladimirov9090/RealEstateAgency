@@ -1,0 +1,35 @@
+object Form3: TForm3
+  Left = 0
+  Top = 0
+  Caption = 'Form3'
+  ClientHeight = 231
+  ClientWidth = 505
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object AgencyconnectionConnection: TFDConnection
+    Params.Strings = (
+      'ConnectionDef=AgencyConnection')
+    LoginPrompt = False
+    Left = 314
+    Top = 64
+  end
+  object AgencyTable: TFDQuery
+    Connection = AgencyconnectionConnection
+    SQL.Strings = (
+      'SELECT * FROM AGENCY')
+    Left = 314
+    Top = 112
+  end
+  object qrAgency: TFDQuery
+    Connection = AgencyconnectionConnection
+    Left = 200
+    Top = 64
+  end
+end

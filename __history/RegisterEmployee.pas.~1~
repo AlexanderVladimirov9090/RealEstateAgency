@@ -1,0 +1,53 @@
+unit RegisterEmployee;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TForm2 = class(TForm)
+    EmployeePhone: TEdit;
+    EmployeeName: TEdit;
+    AgencyName: TEdit;
+    Name: TStaticText;
+    Phone: TStaticText;
+    AgencyN: TStaticText;
+    Register: TButton;
+    procedure AgencyNClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form2: TForm2;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm2.AgencyNClick(Sender: TObject);
+begin
+     {if (AgencyName.Text<>'') and (AgencyPhone.Text <>'') and (AgencyAddress.Text<>'') then begin
+   with dmAgency.Form3.qrAgency do
+    begin
+        dmAgency.Form3.qrAgency.Close;
+        dmAgency.Form3.qrAgency.SQL.Clear;
+        dmAgency.Form3.qrAgency.SQL.Add('INSERT INTO AGENCY (AGENCY_NAME, AGENCY_PHONE, AGENCY_ADDRESS)');
+        dmAgency.Form3.qrAgency.SQL.Add('VALUES ('''+AgencyName.Text+''',');
+        dmAgency.Form3.qrAgency.SQL.Add(' '''+AgencyAddress.Text+''',');
+        dmAgency.Form3.qrAgency.SQL.Add(' '''+AgencyPhone.Text+''')');
+        dmAgency.Form3.qrAgency.ExecSQL;
+        RegAgency.Close;
+    end;
+    end
+    else begin
+        ShowMessage('No Empty Values!');
+    end;
+      }
+end;
+
+end.

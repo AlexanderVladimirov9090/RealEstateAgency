@@ -1,0 +1,24 @@
+program RealEstateAgency;
+
+uses
+  Vcl.Forms,
+  MainUnit in 'MainUnit.pas' {Form1},
+  RegisterAgencyUnit in 'RegisterAgencyUnit.pas' {RegAgency},
+  dmAgency in 'dmAgency.pas' {Form3},
+  AllAgencies in 'AllAgencies.pas' {Agancies},
+  RegisterEmployee in 'RegisterEmployee.pas' {Form2},
+  dmEmployee in 'dmEmployee.pas' {Form4};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TRegAgency, RegAgency);
+  Application.CreateForm(TForm3, Form3);
+  Application.CreateForm(TAgancies, Agancies);
+  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TForm4, Form4);
+  Application.Run;
+end.

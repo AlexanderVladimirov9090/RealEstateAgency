@@ -1,0 +1,53 @@
+unit RegisterEmployee;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, dmEmployee;
+
+type
+  TRegEmployee = class(TForm)
+    EmployeePhone: TEdit;
+    EmployeeName: TEdit;
+    AgencyName: TEdit;
+    Name: TStaticText;
+    Phone: TStaticText;
+    AgencyN: TStaticText;
+    Register: TButton;
+    procedure RegisterClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  RegEmployee: TRegEmployee;
+
+implementation
+
+{$R *.dfm}
+
+procedure TRegEmployee.RegisterClick(Sender: TObject);
+begin
+      if (EmployeeName.Text<>'') and (EmployeePhone.Text <>'') and (AgencyName.Text<>'') then begin
+   with dmEmployee.Form4.qrEmployee do
+    begin
+        dmEmployee.Form4.qrEmployee.Close;
+        dmEmployee.Form4.qrEmployee.SQL.Clear;
+        dmEmployee.Form4.qrEmployee.SQL.Add('INSERT INTO AGENCY (AGENCY_NAME, AGENCY_PHONE, AGENCY_ADDRESS)');
+        dmEmployee.Form4.qrEmployee.SQL.Add('VALUES ('''+AgencyName.Text+''',');
+       dmEmployee.Form4.qrEmployee.SQL.Add(' '''+AgencyAddress.Text+''',');
+       dmEmployee.Form4.qrEmployee.SQL.Add(' '''+AgencyPhone.Text+''')');
+      dmEmployee.Form4.qrEmployee.ExecSQL;
+        RegEmployee.Close;
+    end;
+    end
+    else begin
+        ShowMessage('No Empty Values!');
+    end;
+
+end;
+
+end.

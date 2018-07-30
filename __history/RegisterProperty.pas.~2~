@@ -1,0 +1,138 @@
+unit RegisterProperty;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TRegProperty = class(TForm)
+    address: TEdit;
+    Description: TEdit;
+    propertySize: TEdit;
+    Price: TEdit;
+    PropertyType: TComboBox;
+    BuildMaterials: TComboBox;
+    YardSize: TEdit;
+    ParkingSpace: TEdit;
+    PropertySubType: TComboBox;
+    Regulation: TComboBox;
+    RegisterProperty: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure SelectedItem(Sender: TObject);
+    procedure RegisterPropertyClick(Sender: TObject);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  RegProperty: TRegProperty;
+
+implementation
+
+{$R *.dfm}
+procedure PopulateBuildMaterials();
+begin
+ RegProperty.BuildMaterials.AddItem('EPK', nil);
+ RegProperty.BuildMaterials.AddItem('Birck', nil);
+ RegProperty.BuildMaterials.AddItem('Panel', nil);
+ RegProperty.BuildMaterials.AddItem('Mudbrick', nil);
+ RegProperty.BuildMaterials.ItemIndex :=0;
+end;
+
+procedure TRegProperty.FormCreate(Sender: TObject);
+begin
+PropertyType.AddItem('House', nil);
+PropertyType.AddItem('Apartment', nil);
+PropertyType.AddItem('Land', nil);
+  //Setting the default value
+  PropertyType.ItemIndex := 0;
+    //
+    PopulateBuildMaterials();
+    PropertySubType.AddItem('Floor Of House',nil);
+    PropertySubType.AddItem('House',nil);
+    PropertySubType.ItemIndex :=0;
+  //Setting the default value
+        BuildMaterials.ItemIndex :=0;
+        Regulation.Hide;
+        Regulation.AddItem('Yes', nil);
+        Regulation.AddItem('No', nil);
+        Regulation.ItemIndex :=0;
+end;
+
+procedure TRegProperty.RegisterPropertyClick(Sender: TObject);
+begin
+  {Checks if empty string is pushed to the database}
+  {
+  if (address.Text<>'') and (Description.Text <>'') and (propertySize.Text<>'') and (Price.Text<>'') then
+
+   begin
+    {From the dmAgency I`m Using qrAgency (Object that is used to query the database.)}
+ { with dmAgency.Form3.qrAgency do
+    begin
+     address : TEdit;
+    Description: TEdit;
+    propertySize: TEdit;
+    Price: TEdit;
+     YardSize: TEdit;
+    ParkingSpace: TEdit;
+        dmAgency.Form3.qrAgency.Close;
+        dmAgency.Form3.qrAgency.SQL.Clear;
+        dmAgency.Form3.qrAgency.SQL.Add('INSERT INTO AGENCY (AGENCY_NAME, AGENCY_PHONE, AGENCY_ADDRESS)');
+        dmAgency.Form3.qrAgency.SQL.Add('VALUES ('''+AgencyName.Text+''',');
+        dmAgency.Form3.qrAgency.SQL.Add(' '''+AgencyAddress.Text+''',');
+        dmAgency.Form3.qrAgency.SQL.Add(' '''+AgencyPhone.Text+''')');
+        dmAgency.Form3.qrAgency.ExecSQL;
+        RegAgency.Close;
+    end;
+    end
+    else begin
+        ShowMessage('No Empty Values!');
+    end;
+   }
+end;
+
+procedure TRegProperty.SelectedItem(Sender: TObject);
+begin
+   case PropertyType.ItemIndex of
+    0 :begin
+    BuildMaterials.Show;
+    YardSize.Show;
+    ParkingSpace.Show;
+    PropertySubType.Clear;
+    PropertySubType.AddItem('Floor Of House',nil);
+    PropertySubType.AddItem('House',nil);
+    PropertySubType.ItemIndex :=0;
+    BuildMaterials.ItemIndex:=0;
+    Regulation.Hide;
+    end;
+    1 : begin
+    BuildMaterials.Show;
+    PropertySubType.Clear;
+    PropertySubType.AddItem('Studio',nil);
+    PropertySubType.AddItem('Garsoniera',nil);
+    PropertySubType.AddItem('Two Room Apartment',nil);
+    PropertySubType.AddItem('Tree Room Apartment',nil);
+    PropertySubType.AddItem('Mainsonette',nil);
+    PropertySubType.ItemIndex :=0;
+    BuildMaterials.ItemIndex:=0;
+    Regulation.Hide;
+    end;
+    2 : begin
+    BuildMaterials.Hide;
+    YardSize.Hide;
+    ParkingSpace.Hide;
+    PropertySubType.Clear;
+    PropertySubType.AddItem('Feild',nil);
+    PropertySubType.AddItem('Lawn',nil);
+    PropertySubType.AddItem('Forest',nil);
+    PropertySubType.ItemIndex :=0;
+    Regulation.Show;
+    end;
+    end;
+end;
+end.

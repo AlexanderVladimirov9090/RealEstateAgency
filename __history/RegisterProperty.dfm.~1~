@@ -1,0 +1,104 @@
+object RegProperty: TRegProperty
+  Left = 0
+  Top = 0
+  Caption = 'Property'
+  ClientHeight = 231
+  ClientWidth = 505
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object address: TEdit
+    Left = 24
+    Top = 24
+    Width = 121
+    Height = 21
+    TabOrder = 0
+    Text = 'Address'
+  end
+  object Description: TEdit
+    Left = 24
+    Top = 51
+    Width = 121
+    Height = 73
+    AutoSize = False
+    TabOrder = 1
+    Text = 'Description'
+  end
+  object propertySize: TEdit
+    Left = 24
+    Top = 130
+    Width = 49
+    Height = 21
+    TabOrder = 2
+    Text = 'Size'
+  end
+  object Price: TEdit
+    Left = 24
+    Top = 157
+    Width = 121
+    Height = 21
+    TabOrder = 3
+    Text = 'Price'
+  end
+  object PropertyType: TComboBox
+    Left = 176
+    Top = 24
+    Width = 145
+    Height = 21
+    TabOrder = 4
+    OnSelect = SelectedItem
+  end
+  object BuildMaterials: TComboBox
+    Left = 176
+    Top = 51
+    Width = 145
+    Height = 21
+    TabOrder = 5
+  end
+  object YardSize: TEdit
+    Left = 176
+    Top = 118
+    Width = 145
+    Height = 21
+    TabOrder = 6
+    Text = 'YardSize'
+  end
+  object ParkingSpace: TEdit
+    Left = 176
+    Top = 145
+    Width = 145
+    Height = 21
+    TabOrder = 7
+    Text = 'ParkingSpace'
+  end
+  object PropertySubType: TComboBox
+    Left = 176
+    Top = 78
+    Width = 145
+    Height = 21
+    TabOrder = 8
+  end
+  object Regulation: TComboBox
+    Left = 336
+    Top = 78
+    Width = 145
+    Height = 21
+    TabOrder = 9
+  end
+  object RegisterProperty: TButton
+    Left = 344
+    Top = 176
+    Width = 107
+    Height = 25
+    Caption = 'Register'
+    TabOrder = 10
+    OnClick = RegisterPropertyClick
+  end
+end
